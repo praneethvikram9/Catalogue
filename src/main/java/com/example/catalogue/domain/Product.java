@@ -10,34 +10,33 @@ import javax.persistence.Table;
 public class Product {
 	
 	@Id
-	private int id;
+	private int productId;
 	private String name;
 	private String category;
 	private double price;
 	private double ratings;
 	private int quantity;
 	
-	public Product(int id, String name, String category, double price, double ratings, int quantity) {
+	public Product(int productId, String name, String category, double price, double ratings,int quantity) {
 		super();
-		this.id = id;
+		this.productId = productId;
 		this.name = name;
 		this.category = category;
 		this.price = price;
 		this.ratings = ratings;
 		this.quantity = quantity;
 	}
-	
-	
+		
 	public Product() {
 		super();
 	}
 
 
 	public int getId() {
-		return id;
+		return productId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int productId) {
+		this.productId = productId;
 	}
 	public String getCategory() {
 		return category;
@@ -74,7 +73,7 @@ public class Product {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + productId;
 		return result;
 	}
 	@Override
@@ -86,21 +85,17 @@ public class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		if (id != other.id)
+		if (productId != other.productId)
 			return false;
 		return true;
 	}
-	
+
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", category=" + category + ", price=" + price + ", ratings="
-				+ ratings + "]";
+		return "Product [productId=" + productId + ", name=" + name + ", category=" + category + ", price=" + price
+				+ ", ratings=" + ratings + ", quantity=" + quantity + "]";
 	}
-	
-	
-	
-	
-	
+
 
 }

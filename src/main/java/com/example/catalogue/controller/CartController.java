@@ -45,20 +45,6 @@ public class CartController {
 		return response;
 	}
 	
-	@PostMapping("updateCart/{email}")
-	public ResponseEntity<?> updateCart(@RequestBody List<Integer> products,@PathVariable String email){
-		ResponseEntity<?> response;
-		
-		try {
-			cartService.updateCart(products,email);
-			response = new ResponseEntity<String>(env.getProperty("product.added.to.cart"),HttpStatus.OK);
-		}
-		catch(Exception ex) {
-			logger.error(ex.getMessage());
-            response = new ResponseEntity<String>(ex.getMessage(),HttpStatus.NOT_IMPLEMENTED);
-		}
-		return response;
-	}
 	
 	@PostMapping("addItem/{email}")
 	public ResponseEntity<?> addToCart(@PathVariable String email ,@RequestBody Product product){
@@ -75,11 +61,25 @@ public class CartController {
 	}
 	
 	@PostMapping("removeItem/{email}")
-	public ResponseEntity<?>removeFromCart(@PathVariable String email,@RequestBody int productId){
+	public ResponseEntity<?> removeFromCart(@PathVariable String email,@RequestBody int productId){
 		ResponseEntity<?> response;
 		try {
 			cartService.removeItem(productId,email);
 			response = new ResponseEntity<String>(env.getProperty("cart.update.success"),HttpStatus.OK);
+		}
+		catch(Exception ex) {
+			logger.error(ex.getMessage());
+            response = new ResponseEntity<String>(ex.getMessage(),HttpStatus.NOT_IMPLEMENTED);
+		}
+		return response;
+	}
+	
+	@PostMapping("emptyCart/{email}")
+	public ResponseEntity<?> emptyCartForUser(@PathVariable String email){
+		ResponseEntity<?> response;
+		try {
+			cartService.emptyCart(email);
+			response = new ResponseEntity<String>(env.getProperty("cart.items.removed"),HttpStatus.OK);
 		}
 		catch(Exception ex) {
 			logger.error(ex.getMessage());

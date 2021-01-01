@@ -2,6 +2,8 @@ package com.example.catalogue.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class RegisterServiceImpl implements RegisterService {
 	
 	@Autowired
 	private Environment env;
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public void saveUser(User user) throws UserNameExistsException,InvalidDetailsException {
@@ -27,6 +31,7 @@ public class RegisterServiceImpl implements RegisterService {
 			throw new UserNameExistsException(env.getProperty("user.already.exists.error"));
 		}
 		else {
+			logger.info(env.getProperty("invalid.details"));
 			if(user.getEmail().isEmpty() || user.getEmail() ==null) {
 				throw new InvalidDetailsException(env.getProperty("email.required.error"));
 			}

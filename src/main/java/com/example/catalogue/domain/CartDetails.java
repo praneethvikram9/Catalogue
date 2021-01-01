@@ -1,6 +1,6 @@
 package com.example.catalogue.domain;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -15,7 +15,7 @@ public class CartDetails {
 	private String email;
 	
 	@ElementCollection
-	private List<Integer> products;
+	private Map<Integer,Integer>cartList;
 
 	
 	public String getEmail() {
@@ -24,24 +24,22 @@ public class CartDetails {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public List<Integer> getProducts() {
-		return products;
+
+	public Map<Integer, Integer> getCartList() {
+		return cartList;
 	}
-	public void setProducts(List<Integer> products) {
-		this.products = products;
+	public void setCartList(Map<Integer, Integer> cartList) {
+		this.cartList = cartList;
 	}
-	
-	
 	public CartDetails() {
 		super();
 	}
-	public CartDetails(String email, List<Integer> products) {
+
+	public CartDetails(String email, Map<Integer, Integer> cartList) {
 		super();
 		this.email = email;
-		this.products = products;
+		this.cartList = cartList;
 	}
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -67,8 +65,7 @@ public class CartDetails {
 	}
 	@Override
 	public String toString() {
-		return "CartDetails [email=" + email + ", products=" + products + "]";
+		return "CartDetails [email=" + email + ", cartList=" + cartList + "]";
 	}
 
-	
 }

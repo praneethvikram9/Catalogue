@@ -26,11 +26,17 @@ public class ProductController {
 	@Autowired
 	private Environment env;
 
-	@GetMapping("/allProducts")
-	public ResponseEntity<?> getAllProducts() {
+	@GetMapping("/allProducts/sortBy={sortBy}&{sortDir}")
+	public ResponseEntity<?> getAllProducts(@PathVariable String sortBy,@PathVariable String sortDir) {
 		ResponseEntity<?> response;
 		try {
-			response = new ResponseEntity<List<Product>>(productService.getAllProducts(),HttpStatus.OK);
+			if(sortDir.equals("asc")) {
+				response = new ResponseEntity<List<Product>>(productService.getAllProducts(sortBy),HttpStatus.OK);
+			}
+			else {
+				response = new ResponseEntity<List<Product>>(productService.sortProductsByDesc(sortBy),HttpStatus.OK);
+			}
+			
 		}
 
 		catch(Exception ex) {
@@ -58,6 +64,18 @@ public class ProductController {
 		try {
 			productService.addProduct(product);
 			response = new ResponseEntity<String>(env.getProperty("product.added.success"),HttpStatus.OK);
+		}
+		catch(Exception ex) {
+			response = new ResponseEntity<String>(ex.getMessage(),HttpStatus.NOT_IMPLEMENTED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/search/{name}")
+	public ResponseEntity<?> searchProductByName(@PathVariable String productName){
+		ResponseEntity<?> response;
+		try {
+			response = new ResponseEntity<List<Product>>(productService.findProductsByName(productName),HttpStatus.OK);
 		}
 		catch(Exception ex) {
 			response = new ResponseEntity<String>(ex.getMessage(),HttpStatus.NOT_IMPLEMENTED);

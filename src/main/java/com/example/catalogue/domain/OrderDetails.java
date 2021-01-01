@@ -1,7 +1,9 @@
 package com.example.catalogue.domain;
 
+import java.util.Map;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,10 +17,14 @@ import lombok.NoArgsConstructor;
 public class OrderDetails {
 
 	@Id
-	@GeneratedValue
 	private int orderId;
 	private String userEmail;
-	private String productId;
+	@ElementCollection
+	private Map<Integer,Product> orderMap; //stores product id & product details
+	
+	@ElementCollection
+	private Map<Integer,Integer> productMap; //stores the product id & quantity ordered
+	private String productName;
 	private double price;
 	private String orderDate;
 	private String deliveryAddress;
@@ -35,12 +41,6 @@ public class OrderDetails {
 	}
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
-	}
-	public String getProductId() {
-		return productId;
-	}
-	public void setProductId(String productId) {
-		this.productId = productId;
 	}
 	public double getPrice() {
 		return price;
@@ -66,7 +66,25 @@ public class OrderDetails {
 	public void setExpectedDeliveryDate(String expectedDeliveryDate) {
 		this.expectedDeliveryDate = expectedDeliveryDate;
 	}
-	
+	public Map<Integer, Product> getOrderMap() {
+		return orderMap;
+	}
+	public void setOrderMap(Map<Integer, Product> orderMap) {
+		this.orderMap = orderMap;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public Map<Integer, Integer> getProductMap() {
+		return productMap;
+	}
+	public void setProductMap(Map<Integer, Integer> productMap) {
+		this.productMap = productMap;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -89,9 +107,11 @@ public class OrderDetails {
 	}
 	@Override
 	public String toString() {
-		return "OrderDetails [orderId=" + orderId + ", userEmail=" + userEmail + ", productId=" + productId + ", price="
-				+ price + ", orderDate=" + orderDate + ", deliveryAddress=" + deliveryAddress
-				+ ", expectedDeliveryDate=" + expectedDeliveryDate + "]";
+		return "OrderDetails [orderId=" + orderId + ", userEmail=" + userEmail + ", orderMap=" + orderMap
+				+ ", productMap=" + productMap + ", productName=" + productName + ", price=" + price + ", orderDate="
+				+ orderDate + ", deliveryAddress=" + deliveryAddress + ", expectedDeliveryDate=" + expectedDeliveryDate
+				+ "]";
 	}
+
 
 }

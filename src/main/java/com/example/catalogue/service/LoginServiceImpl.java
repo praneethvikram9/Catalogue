@@ -1,5 +1,7 @@
 package com.example.catalogue.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -16,9 +18,12 @@ public class LoginServiceImpl implements LoginService {
 	
 	@Autowired
 	private Environment env;
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public boolean findUser(User user) throws UserNotFoundException {
+		logger.info("user login check");
 		User userBody;
 		 if(userRepository.existsById(user.getEmail()) ) {
 			 userBody = userRepository.getOne(user.getEmail());
